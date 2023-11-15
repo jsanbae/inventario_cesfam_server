@@ -1,0 +1,44 @@
+type User {
+    _id: ID!,
+    email: String!,
+    password: String!,
+    name: String!,
+    role: Role!,
+    photo: String,
+    token: String,
+    createdAt: DateTime,
+    updatedAt: DateTime
+}
+
+input RegisterInput {
+    email: String!,
+    password: String!, 
+    name: String!,
+    role: Role!,
+    photo: String
+}
+
+input LoginInput {
+    email: String!,
+    password: String! 
+}
+
+enum Role {
+    Admin
+    Auditor
+    Mantenedor
+}
+
+type Query {
+    user(id: ID!): User,
+    viewer(id :ID!): User,
+    users: [User]
+}
+
+type Mutation {
+    registerUser(registerInput: RegisterInput): User
+    loginUser(loginInput: LoginInput): User
+    logoutUser(id: ID!): User
+}
+
+scalar DateTime

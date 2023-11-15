@@ -1,0 +1,53 @@
+type InventoryMovement {
+    # Item ID
+    _id: ID!
+    # Type of the Movement
+    type: MovementType!
+    # Moment of the Movement
+    date: Date!
+    # Item involved in the Movement
+    item: Item!
+    # Place where the Movement was made
+    place: String!
+    # Responsable for the Movement was made
+    responsable: String!
+    # Movement comments
+    comment: String
+    # Date of creation of the Item
+    createdAt: DateTime
+    # Date of last update of the Item
+    updatedAt: DateTime
+}
+
+type Query {
+    InventoryMovement(id: ID!): InventoryMovement # get a InventoryMovement by its id
+    InventoryMovements(limit: Int, skip: Int, sort_field: String, sort_order: String): [InventoryMovement] # get all Movements
+    InventoryMovementFullData(id: ID!): JSON, # get a InventoryMovement by its id with, avoiding declaring fields on query, similar to SELECT *
+}
+
+type Mutation {
+    addInventoryMovement(inventoryMovementInput: InventoryMovementInput): InventoryMovement # create a new InventoryMovement
+    updateInventoryMovement(id: ID!, inventoryMovementInput: InventoryMovementInput): InventoryMovement # edit a InventoryMovement by its id
+    deleteInventoryMovement(id: ID!): InventoryMovement # remove a InventoryMovement by its id
+}
+
+input InventoryMovementInput {
+    type: MovementType!
+    date: Date!
+    item: ID!
+    place: String!
+    responsable: String!
+    comment: String
+}
+
+enum MovementType {
+    Ingreso
+    EnReparacion, 
+    Prestamo, 
+    Devolucion,
+    DeBaja
+}
+
+scalar Date
+scalar DateTime
+scalar JSON

@@ -1,0 +1,75 @@
+type Item {
+    # Item ID
+    _id: ID!
+    # Type of the Item
+    type: ItemType!
+    # State of the Item
+    state: ItemState!
+    # Clasification of the Item
+    clasification: ItemClasification!
+    # Name of the Item
+    name: String
+    # Internal code of the Item
+    internal_code: String!
+    # Description of the Item
+    description: String
+    # Brand of the Item
+    brand: String
+    # Model of the Item
+    model: String
+    # Serial number of the Item
+    serial_number: String
+    # Date of creation of the Item
+    createdAt: DateTime
+    # Date of last update of the Item
+    updatedAt: DateTime
+}
+type Query {
+    ItemFullData(id: ID!): JSON, # get a Item by its id with, avoiding declaring fields on query, similar to SELECT *
+    Item(id: ID!): Item # get a Item by its id
+    Items(pattern: String, limit: Int, skip: Int, sort_field: String, sort_order: String): [Item] # get all Items
+}
+type Mutation {
+    addItem(itemInput: ItemInput!): Item # create a new Item
+    updateItem(id: ID!, itemInput: ItemInput!): Item # edit a Item by its id
+    deleteItem(id: ID!): JSON # remove a Item by its id
+}
+
+input ItemInput {
+    type: String!
+    state: String!
+    clasification: ItemClasification!
+    name: String
+    internal_code: String!
+    description: String
+    brand: String
+    model: String
+    serial_number: String
+}
+
+enum ItemType {
+    Pesa
+    Tallimetro
+    Otoscopio
+    Oftalmoscopio
+    Estetoscopio
+    Esfigmomanometro
+    Termometro
+    Glucometro
+    Oximetro
+    Electrocardiografo
+    Otro
+}
+enum ItemState {
+    Bueno
+    Malo
+}
+
+enum ItemClasification {
+    Critico
+    Relevante
+    General
+}
+
+scalar DateTime
+scalar JSON
